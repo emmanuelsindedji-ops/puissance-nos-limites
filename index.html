@@ -4,554 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#050508">
-<title>ZAGA AGENCY MACHINE</title>
+<title>ZAGA ULTIMATE — Pub & Diffusion</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-
-:root {
-  --bg: #050508;
-  --bg2: #080810;
-  --bg3: #0c0c18;
-  --card: #0a0a14;
-  --border: #151530;
-  --border2: #1a1a40;
-  --accent: #00E5FF;
-  --accent2: #6D28D9;
-  --gold: #F59E0B;
-  --green: #10B981;
-  --red: #EF4444;
-  --pink: #EC4899;
-  --text: #DDE6FF;
-  --muted: #3D4A6B;
-  --radius: 14px;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding-bottom: 30px;
-  overflow-x: hidden;
-}
-
-/* BACKGROUND EFFECTS */
-.bg-grid {
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-.bg-glow1 {
-  position: fixed;
-  top: -200px; left: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(109,40,217,0.12) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-.bg-glow2 {
-  position: fixed;
-  bottom: -200px; right: -200px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* HEADER */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: rgba(5,5,8,0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border2);
-}
-.header-main {
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.brand-icon {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-}
-.brand-name {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  color: var(--text);
-  letter-spacing: 0.05em;
-}
-.brand-tag {
-  font-size: 0.55rem;
-  color: var(--accent);
-  font-family: 'Space Mono', monospace;
-  letter-spacing: 0.1em;
-  display: block;
-  margin-top: -2px;
-}
-.header-badges {
-  display: flex;
-  gap: 6px;
-}
-.badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(16,185,129,0.1);
-  border: 1px solid rgba(16,185,129,0.3);
-  border-radius: 99px;
-  padding: 3px 8px;
-  font-size: 0.55rem;
-  color: var(--green);
-  font-family: 'Space Mono', monospace;
-}
-.badge-dot {
-  width: 5px; height: 5px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-
-/* TABS NAV */
-.tabs-nav {
-  display: flex;
-  border-top: 1px solid var(--border);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.tabs-nav::-webkit-scrollbar { display: none; }
-.tab-nav-item {
-  flex: 1;
-  min-width: 70px;
-  padding: 10px 8px;
-  text-align: center;
-  font-size: 0.6rem;
-  font-family: 'Space Mono', monospace;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.tab-nav-item.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-/* PAGES */
-.page { display: none; padding: 14px; position: relative; z-index: 1; }
-.page.active { display: block; }
-
-/* CARDS */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
-  position: relative;
-  overflow: hidden;
-}
-.card-accent {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-}
-.card-title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* FORM ELEMENTS */
-.field-label {
-  font-size: 0.65rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-  font-family: 'Space Mono', monospace;
-}
-input[type="text"], textarea, select {
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  padding: 11px 14px;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-bottom: 12px;
-}
-input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent); }
-textarea { min-height: 80px; resize: none; }
-select { -webkit-appearance: none; }
-
-/* CHIPS */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.chip {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 0.72rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--muted);
-}
-.chip:hover { border-color: var(--accent); color: var(--text); }
-.chip.sel {
-  background: rgba(0,229,255,0.1);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.chip.sel-gold {
-  background: rgba(245,158,11,0.1);
-  border-color: var(--gold);
-  color: var(--gold);
-}
-
-/* UPLOAD ZONE */
-.upload-zone {
-  border: 2px dashed var(--border2);
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 12px;
-  position: relative;
-}
-.upload-zone:hover { border-color: var(--accent); background: rgba(0,229,255,0.03); }
-.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload-icon { font-size: 2rem; margin-bottom: 8px; }
-.upload-text { font-size: 0.8rem; color: var(--muted); }
-.upload-text span { color: var(--accent); }
-.upload-preview {
-  max-width: 100%;
-  max-height: 200px;
-  border-radius: 10px;
-  margin-top: 10px;
-  display: none;
-}
-
-/* BUTTONS */
-.btn-primary {
-  width: 100%;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border: none;
-  border-radius: 12px;
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  padding: 15px;
-  cursor: pointer;
-  transition: all 0.3s;
-  letter-spacing: 0.05em;
-  position: relative;
-  overflow: hidden;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.25); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-
-.btn-secondary {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  color: var(--text);
-  font-size: 0.8rem;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'DM Sans', sans-serif;
-}
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-.btn-gold {
-  background: linear-gradient(135deg, #d97706, var(--gold));
-  border: none;
-  border-radius: 12px;
-  color: #000;
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  padding: 15px;
-  cursor: pointer;
-  transition: all 0.3s;
-  width: 100%;
-}
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.3); }
-
-.btn-row { display: flex; gap: 8px; margin-bottom: 10px; }
-.btn-row .btn-secondary { flex: 1; text-align: center; }
-
-/* LOADING */
-.ai-loading {
-  display: none;
-  padding: 16px 0;
-}
-.ai-loading.show { display: block; }
-.ai-bar {
-  height: 3px;
-  background: var(--border);
-  border-radius: 99px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-.ai-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent2), var(--accent), var(--pink));
-  background-size: 200% 100%;
-  animation: aibar 1.5s linear infinite;
-  border-radius: 99px;
-}
-@keyframes aibar {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-.ai-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-  animation: blink2 1s infinite;
-}
-@keyframes blink2 { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-/* RESULT TABS */
-.res-tabs { display: flex; gap: 4px; margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
-.res-tabs::-webkit-scrollbar { display: none; }
-.res-tab {
-  flex-shrink: 0;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 7px 12px;
-  font-size: 0.65rem;
-  font-family: 'Space Mono', monospace;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.res-tab.active {
-  background: rgba(0,229,255,0.1);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.res-panel { display: none; }
-.res-panel.active { display: block; }
-
-.result-box {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 0.85rem;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  margin-bottom: 8px;
-  min-height: 80px;
-  color: var(--text);
-}
-.result-box.accent { color: var(--accent); }
-.result-box .placeholder { color: var(--muted); font-style: italic; font-size: 0.8rem; }
-
-/* SHARE BUTTONS */
-.share-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
-.share-btn {
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 0.72rem;
-  cursor: pointer;
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-.share-btn:hover { transform: translateY(-2px); }
-.btn-fb { background: #1877F2; color: #fff; }
-.btn-wa { background: #25D366; color: #fff; }
-.btn-tg { background: #2AABEE; color: #fff; }
-.btn-tk { background: #111; color: #fff; border: 1px solid #333; }
-.btn-ig { background: linear-gradient(135deg, #f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
-.btn-copy { background: var(--bg3); border: 1px solid var(--border2); color: var(--accent); }
-
+:root{--bg:#050508;--bg2:#080810;--bg3:#0c0c18;--card:#0a0a14;--border:#151530;--border2:#1a1a40;--accent:#00E5FF;--accent2:#6D28D9;--gold:#F59E0B;--green:#10B981;--red:#EF4444;--pink:#EC4899;--text:#DDE6FF;--muted:#3D4A6B;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:30px;overflow-x:hidden}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.bg-glow1{position:fixed;top:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(109,40,217,0.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+.bg-glow2{position:fixed;bottom:-200px;right:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,255,0.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+.header{position:sticky;top:0;z-index:200;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2)}
+.header-main{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent2),var(--accent));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.brand-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);letter-spacing:.05em}
+.brand-tag{font-size:.55rem;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:.1em;display:block;margin-top:-2px}
+.badge{display:flex;align-items:center;gap:4px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:99px;padding:3px 8px;font-size:.55rem;color:var(--green);font-family:'Space Mono',monospace}
+.badge-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.tabs-nav{display:flex;border-top:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-nav-item{flex:1;min-width:65px;padding:10px 6px;text-align:center;font-size:.58rem;font-family:'Space Mono',monospace;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab-nav-item.active{color:var(--accent);border-bottom-color:var(--accent)}
+.page{display:none;padding:14px;position:relative;z-index:1}
+.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;position:relative;overflow:hidden}
+.card-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.card-accent-gold{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#d97706,var(--gold))}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.field-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;font-family:'Space Mono',monospace}
+input[type="text"],input[type="number"],textarea,select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:11px 14px;outline:none;transition:border-color .2s;margin-bottom:12px}
+input[type="text"]:focus,input[type="number"]:focus,textarea:focus,select:focus{border-color:var(--accent)}
+textarea{min-height:80px;resize:none}
+select{-webkit-appearance:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;font-size:.72rem;cursor:pointer;transition:all .2s;color:var(--muted)}
+.chip.sel{background:rgba(0,229,255,.1);border-color:var(--accent);color:var(--accent)}
+.chip.sel-gold{background:rgba(245,158,11,.1);border-color:var(--gold);color:var(--gold)}
+.chip.sel-green{background:rgba(16,185,129,.1);border-color:var(--green);color:var(--green)}
+.upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px;position:relative}
+.upload-zone:hover{border-color:var(--accent);background:rgba(0,229,255,.03)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-preview{max-width:100%;max-height:180px;border-radius:10px;margin-top:10px;display:none}
+.btn-primary{width:100%;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;padding:15px;cursor:pointer;transition:all .3s;letter-spacing:.05em}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,229,255,.25)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-gold{width:100%;background:linear-gradient(135deg,#d97706,var(--gold));border:none;border-radius:12px;color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;padding:15px;cursor:pointer;transition:all .3s}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.3)}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:.8rem;padding:10px 14px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-row{display:flex;gap:8px;margin-bottom:10px}
+.btn-row .btn-secondary{flex:1;text-align:center}
+.ai-loading{display:none;padding:12px 0}
+.ai-loading.show{display:block}
+.ai-bar{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:8px}
+.ai-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--pink));background-size:200% 100%;animation:aibar 1.5s linear infinite;border-radius:99px}
+@keyframes aibar{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ai-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent);letter-spacing:.1em;animation:blink2 1s infinite}
+@keyframes blink2{0%,100%{opacity:1}50%{opacity:.4}}
+.res-tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.res-tabs::-webkit-scrollbar{display:none}
+.res-tab{flex-shrink:0;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;font-size:.65rem;font-family:'Space Mono',monospace;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.res-tab.active{background:rgba(0,229,255,.1);border-color:var(--accent);color:var(--accent)}
+.res-panel{display:none}
+.res-panel.active{display:block}
+.result-box{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:14px;font-size:.85rem;line-height:1.7;white-space:pre-wrap;margin-bottom:8px;min-height:80px;color:var(--text)}
+.result-box.accent{color:var(--accent)}
+.result-box .placeholder{color:var(--muted);font-style:italic;font-size:.8rem}
+.share-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.share-btn{border:none;border-radius:10px;padding:12px;font-size:.72rem;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.share-btn:hover{transform:translateY(-2px)}
+.btn-fb{background:#1877F2;color:#fff}
+.btn-wa{background:#25D366;color:#fff}
+.btn-tg{background:#2AABEE;color:#fff}
+.btn-tk{background:#111;color:#fff;border:1px solid #333}
+/* CALCULATEUR */
+.calc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.calc-result-card{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:14px;text-align:center}
+.calc-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;line-height:1}
+.calc-lbl{font-size:.62rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+.calc-num.green{color:var(--green)}
+.calc-num.gold{color:var(--gold)}
+.calc-num.accent{color:var(--accent)}
+.calc-num.pink{color:var(--pink)}
+/* COMPARATEUR */
+.network-card{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:14px;margin-bottom:10px}
+.network-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.network-icon{font-size:1.4rem}
+.network-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
+.network-score{margin-left:auto;font-family:'Space Mono',monospace;font-size:.75rem;padding:3px 10px;border-radius:99px}
+.score-best{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.score-good{background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.3)}
+.score-ok{background:rgba(0,229,255,.15);color:var(--accent);border:1px solid rgba(0,229,255,.3)}
+.network-bars{display:flex;flex-direction:column;gap:6px}
+.network-bar-row{display:flex;align-items:center;gap:8px;font-size:.7rem}
+.network-bar-label{width:80px;color:var(--muted);flex-shrink:0}
+.network-bar-track{flex:1;height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+.network-bar-fill{height:100%;border-radius:99px;transition:width .8s ease}
+/* BRIEF */
+.brief-section{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px;margin-bottom:8px}
+.brief-title{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.1em}
+.brief-content{font-size:.82rem;line-height:1.6;color:var(--text);white-space:pre-wrap}
+/* AUDIENCE */
+.audience-tag{display:inline-block;background:rgba(109,40,217,.15);border:1px solid rgba(109,40,217,.4);border-radius:6px;padding:4px 10px;font-size:.72rem;color:#a78bfa;margin:3px;font-family:'Space Mono',monospace}
 /* STATS */
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-.stat-item {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 12px 8px;
-  text-align: center;
-}
-.stat-n {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--accent);
-  line-height: 1;
-}
-.stat-l { font-size: 0.58rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-/* CLIENT CARDS */
-.client-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.client-card:hover { border-color: var(--accent); }
-.client-avatar {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-.client-info { flex: 1; }
-.client-name { font-weight: 600; font-size: 0.9rem; }
-.client-meta { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
-.client-posts {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--accent);
-  background: rgba(0,229,255,0.1);
-  border: 1px solid rgba(0,229,255,0.2);
-  border-radius: 6px;
-  padding: 3px 8px;
-}
-
-/* CALENDAR */
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 12px; }
-.cal-day {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 8px 4px;
-  text-align: center;
-  font-size: 0.6rem;
-}
-.cal-day-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--text); }
-.cal-day-lbl { color: var(--muted); margin-top: 2px; font-size: 0.5rem; }
-.cal-day.has-content { border-color: var(--accent); background: rgba(0,229,255,0.05); }
-.cal-day.has-content .cal-day-num { color: var(--accent); }
-
-/* RAPPORT */
-.rapport-section {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 10px;
-}
-.rapport-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; color: var(--gold); }
-.rapport-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
-.rapport-item:last-child { border-bottom: none; }
-.rapport-val { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 0.75rem; }
-
-/* EMPTY STATE */
-.empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--muted);
-}
-.empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.empty-text { font-size: 0.82rem; line-height: 1.6; }
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 20px; left: 50%;
-  transform: translateX(-50%);
-  background: var(--green);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 99px;
-  font-size: 0.78rem;
-  font-family: 'Space Mono', monospace;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.toast.show { opacity: 1; }
-.toast.err { background: var(--red); }
-.toast.warn { background: var(--gold); color: #000; }
-
-/* MODAL */
-.overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.8);
-  z-index: 500;
-  display: none;
-  align-items: flex-end;
-}
-.overlay.open { display: flex; }
-.modal {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 20px 20px 0 0;
-  padding: 24px 16px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-  animation: slideUp 0.3s ease;
-}
-@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
-.modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 16px; }
-.modal-btns { display: flex; gap: 8px; margin-top: 16px; }
-.btn-cancel { flex:1; background:var(--bg3); border:1px solid var(--border2); border-radius:10px; color:var(--muted); padding:12px; cursor:pointer; font-size:0.85rem; }
-.btn-confirm { flex:1; background:linear-gradient(135deg,var(--accent2),var(--accent)); border:none; border-radius:10px; color:#fff; font-family:'Syne',sans-serif; font-weight:700; padding:12px; cursor:pointer; font-size:0.85rem; }
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat-item{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 8px;text-align:center}
+.stat-n{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--accent);line-height:1}
+.stat-l{font-size:.58rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:10px 20px;border-radius:99px;font-size:.78rem;font-family:'Space Mono',monospace;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.toast.err{background:var(--red)}
+.toast.warn{background:var(--gold);color:#000}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:flex-end}
+.overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:24px 16px;width:100%;max-height:85vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:16px}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.btn-cancel{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--muted);padding:12px;cursor:pointer;font-size:.85rem}
+.btn-confirm{flex:1;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:10px;color:#fff;font-family:'Syne',sans-serif;font-weight:700;padding:12px;cursor:pointer;font-size:.85rem}
+.range-input{width:100%;-webkit-appearance:none;height:4px;border-radius:99px;background:var(--border2);outline:none;margin-bottom:6px}
+.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer}
+.range-val{font-family:'Space Mono',monospace;font-size:.8rem;color:var(--accent);text-align:center;margin-bottom:12px}
 </style>
 </head>
 <body>
-
 <div class="bg-grid"></div>
 <div class="bg-glow1"></div>
 <div class="bg-glow2"></div>
@@ -562,178 +140,124 @@ select { -webkit-appearance: none; }
     <div class="brand">
       <div class="brand-icon">⚡</div>
       <div>
-        <div class="brand-name">ZAGA AGENCY</div>
-        <span class="brand-tag">BROADCAST MACHINE v3.0</span>
+        <div class="brand-name">ZAGA ULTIMATE</div>
+        <span class="brand-tag">AGENCY ENGINE v4.0 · PUISSANCE SANS LIMITES</span>
       </div>
     </div>
-    <div class="header-badges">
-      <div class="badge"><div class="badge-dot"></div>CLAUDE IA</div>
-    </div>
+    <div class="badge"><div class="badge-dot"></div>CLAUDE IA</div>
   </div>
   <div class="tabs-nav">
-    <div class="tab-nav-item active" onclick="goTab('generer')">⚡ Générer</div>
-    <div class="tab-nav-item" onclick="goTab('clients')">👥 Clients</div>
-    <div class="tab-nav-item" onclick="goTab('calendrier')">🗓️ Calendrier</div>
-    <div class="tab-nav-item" onclick="goTab('rapport')">📊 Rapport</div>
-    <div class="tab-nav-item" onclick="goTab('bio')">✍️ Bio</div>
+    <div class="tab-nav-item active" onclick="goTab('generer',this)">⚡ Générer</div>
+    <div class="tab-nav-item" onclick="goTab('budget',this)">🧮 Budget</div>
+    <div class="tab-nav-item" onclick="goTab('reseau',this)">📊 Réseau</div>
+    <div class="tab-nav-item" onclick="goTab('brief',this)">📋 Brief Pub</div>
+    <div class="tab-nav-item" onclick="goTab('audience',this)">🎯 Audience</div>
+    <div class="tab-nav-item" onclick="goTab('clients',this)">👥 Clients</div>
   </div>
 </div>
 
-<!-- ===================== PAGE GÉNÉRER ===================== -->
+<!-- ======= PAGE GÉNÉRER ======= -->
 <div class="page active" id="page-generer">
-
-  <!-- STATS -->
   <div class="stats-row">
-    <div class="stat-item">
-      <div class="stat-n" id="s-clients">0</div>
-      <div class="stat-l">Clients</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-n" id="s-posts">0</div>
-      <div class="stat-l">Posts Générés</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-n" id="s-partages">0</div>
-      <div class="stat-l">Diffusions</div>
-    </div>
+    <div class="stat-item"><div class="stat-n" id="s-clients">0</div><div class="stat-l">Clients</div></div>
+    <div class="stat-item"><div class="stat-n" id="s-posts">0</div><div class="stat-l">Contenus</div></div>
+    <div class="stat-item"><div class="stat-n" id="s-briefs">0</div><div class="stat-l">Briefs</div></div>
   </div>
 
-  <!-- CONFIG -->
   <div class="card">
     <div class="card-accent"></div>
-    <div class="card-title">🎯 Configurer la Campagne</div>
-
-    <div class="field-label">Client / Entreprise</div>
-    <input type="text" id="g-client" placeholder="Nom du client ou de l'entreprise">
-
-    <div class="field-label">Secteur d'activité</div>
-    <div class="chips" id="chips-secteur">
+    <div class="card-title">🎯 Campagne</div>
+    <div class="field-label">Client / Projet</div>
+    <input type="text" id="g-client" placeholder="Nom du client ou projet">
+    <div class="field-label">Secteur</div>
+    <div class="chips" id="c-secteur">
       <div class="chip sel" data-val="Formation">📚 Formation</div>
       <div class="chip" data-val="Immobilier">🏢 Immo</div>
       <div class="chip" data-val="E-commerce">🛒 E-com</div>
       <div class="chip" data-val="Restauration">🍽️ Resto</div>
-      <div class="chip" data-val="Tech / IA">🤖 Tech/IA</div>
-      <div class="chip" data-val="Marketing">📣 Marketing</div>
-      <div class="chip" data-val="Événements">🎪 Events</div>
-      <div class="chip" data-val="Services">💼 Services</div>
-      <div class="chip" data-val="Santé">💊 Santé</div>
+      <div class="chip" data-val="Tech">🤖 Tech</div>
       <div class="chip" data-val="Mode">👗 Mode</div>
+      <div class="chip" data-val="Santé">💊 Santé</div>
+      <div class="chip" data-val="Services">💼 Services</div>
     </div>
-
     <div class="field-label">Détails de l'offre *</div>
-    <textarea id="g-offre" placeholder="Décris l'offre, le produit, les avantages clés, le prix, la promotion..."></textarea>
-
+    <textarea id="g-offre" placeholder="Décris l'offre, les avantages, le prix, la promo..."></textarea>
     <div class="field-label">Lien à promouvoir</div>
-    <input type="text" id="g-lien" placeholder="https://... (WhatsApp, site web, commande...)">
-
-    <div class="field-label">Photo ou Vidéo (optionnel)</div>
+    <input type="text" id="g-lien" placeholder="https://...">
+    <div class="field-label">Photo / Vidéo (optionnel)</div>
     <div class="upload-zone" id="upload-zone">
-      <input type="file" accept="image/*,video/*" id="media-input" onchange="handleMedia(event)">
-      <div class="upload-icon">📸</div>
-      <div class="upload-text">Appuie pour ajouter une <span>photo ou vidéo</span><br><small style="font-size:0.65rem;color:var(--muted)">Optionnel — Claude adaptera le texte</small></div>
+      <input type="file" accept="image/*" id="media-input" onchange="handleMedia(event)">
+      <div style="font-size:1.8rem;margin-bottom:6px">📸</div>
+      <div style="font-size:.78rem;color:var(--muted)">Appuie pour ajouter une photo<br><small>Optionnel — Claude adapte le contenu</small></div>
       <img id="media-preview" class="upload-preview">
     </div>
   </div>
 
-  <!-- CIBLAGE -->
   <div class="card">
     <div class="card-accent"></div>
-    <div class="card-title">🌍 Marchés Cibles</div>
-    <div class="chips" id="chips-geo">
+    <div class="card-title">🌍 Marchés & Ton</div>
+    <div class="field-label">Zones cibles</div>
+    <div class="chips" id="c-geo">
       <div class="chip sel-gold" data-val="Bénin">🇧🇯 Bénin</div>
+      <div class="chip" data-val="Cotonou">📍 Cotonou</div>
+      <div class="chip" data-val="Parakou">📍 Parakou</div>
       <div class="chip" data-val="Togo">🇹🇬 Togo</div>
-      <div class="chip" data-val="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</div>
-      <div class="chip" data-val="Sénégal">🇸🇳 Sénégal</div>
-      <div class="chip" data-val="Cameroun">🇨🇲 Cameroun</div>
+      <div class="chip" data-val="Côte d'Ivoire">🇨🇮 CI</div>
       <div class="chip" data-val="France">🇫🇷 France</div>
       <div class="chip" data-val="Canada">🇨🇦 Canada</div>
       <div class="chip" data-val="Dubai">🇦🇪 Dubai</div>
-      <div class="chip" data-val="USA Diaspora">🇺🇸 USA</div>
-      <div class="chip" data-val="Afrique Francophone">🌍 Afrique</div>
+      <div class="chip" data-val="Afrique">🌍 Afrique</div>
     </div>
-  </div>
-
-  <!-- TON -->
-  <div class="card">
-    <div class="card-accent"></div>
-    <div class="card-title">🎨 Style de Communication</div>
-    <div class="chips" id="chips-ton">
-      <div class="chip sel" data-val="Professionnel">💼 Professionnel</div>
-      <div class="chip" data-val="Viral & Accrocheur">🔥 Viral</div>
-      <div class="chip" data-val="Émotionnel">❤️ Émotionnel</div>
-      <div class="chip" data-val="Urgence & Rareté">⏰ Urgence</div>
+    <div class="field-label">Style</div>
+    <div class="chips" id="c-ton">
+      <div class="chip sel" data-val="Professionnel">💼 Pro</div>
+      <div class="chip" data-val="Viral">🔥 Viral</div>
+      <div class="chip" data-val="Émotionnel">❤️ Émotion</div>
+      <div class="chip" data-val="Urgence">⏰ Urgence</div>
       <div class="chip" data-val="Storytelling">📖 Story</div>
-      <div class="chip" data-val="Informatif">📋 Info</div>
     </div>
   </div>
 
-  <!-- BOUTON GÉNÉRER -->
   <button class="btn-primary" id="btn-gen" onclick="generer()">⚡ GÉNÉRER AVEC CLAUDE IA</button>
+  <div class="ai-loading" id="ai-load"><div class="ai-bar"><div class="ai-bar-fill"></div></div><div class="ai-label">⚡ CLAUDE IA GÉNÈRE TON CONTENU...</div></div>
 
-  <div class="ai-loading" id="ai-loading">
-    <div class="ai-bar"><div class="ai-bar-fill"></div></div>
-    <div class="ai-label">⚡ CLAUDE IA GÉNÈRE TON CONTENU...</div>
-  </div>
-
-  <!-- RÉSULTATS -->
-  <div id="results-block" style="display:none;">
-    <div class="card" style="margin-top:12px;">
+  <div id="results-block" style="display:none;margin-top:12px;">
+    <div class="card">
       <div class="card-accent"></div>
       <div class="card-title">📦 Contenu Généré</div>
-
       <div class="res-tabs">
-        <div class="res-tab active" onclick="resTab('fb')">📘 Facebook</div>
-        <div class="res-tab" onclick="resTab('tk')">🎵 TikTok</div>
-        <div class="res-tab" onclick="resTab('wa')">💬 WhatsApp</div>
-        <div class="res-tab" onclick="resTab('ig')">📸 Instagram</div>
-        <div class="res-tab" onclick="resTab('ht')">🏷️ Hashtags</div>
-        <div class="res-tab" onclick="resTab('ac')">🎯 Accroche</div>
+        <div class="res-tab active" onclick="resTab('fb',this)">📘 Facebook</div>
+        <div class="res-tab" onclick="resTab('tk',this)">🎵 TikTok</div>
+        <div class="res-tab" onclick="resTab('wa',this)">💬 WhatsApp</div>
+        <div class="res-tab" onclick="resTab('ig',this)">📸 Instagram</div>
+        <div class="res-tab" onclick="resTab('ht',this)">🏷️ Hashtags</div>
+        <div class="res-tab" onclick="resTab('ac',this)">🎯 Accroches</div>
       </div>
-
       <div class="res-panel active" id="rp-fb">
         <div class="result-box" id="r-fb"><span class="placeholder">En attente...</span></div>
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="copyRes('r-fb')">📋 Copier</button>
-          <button class="btn-secondary" onclick="partager('facebook')">📘 Facebook</button>
-        </div>
+        <div class="btn-row"><button class="btn-secondary" onclick="copyEl('r-fb')">📋 Copier</button><button class="btn-secondary" onclick="partager('facebook')">📘 Facebook</button></div>
       </div>
-
       <div class="res-panel" id="rp-tk">
         <div class="result-box" id="r-tk"><span class="placeholder">En attente...</span></div>
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="copyRes('r-tk')">📋 Copier Script</button>
-          <button class="btn-secondary" onclick="partager('tiktok')">🎵 TikTok</button>
-        </div>
+        <div class="btn-row"><button class="btn-secondary" onclick="copyEl('r-tk')">📋 Copier</button><button class="btn-secondary" onclick="partager('tiktok')">🎵 TikTok</button></div>
       </div>
-
       <div class="res-panel" id="rp-wa">
         <div class="result-box" id="r-wa"><span class="placeholder">En attente...</span></div>
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="copyRes('r-wa')">📋 Copier</button>
-          <button class="btn-secondary" onclick="partager('whatsapp')">💬 WhatsApp</button>
-        </div>
+        <div class="btn-row"><button class="btn-secondary" onclick="copyEl('r-wa')">📋 Copier</button><button class="btn-secondary" onclick="partager('whatsapp')">💬 WhatsApp</button></div>
       </div>
-
       <div class="res-panel" id="rp-ig">
         <div class="result-box" id="r-ig"><span class="placeholder">En attente...</span></div>
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="copyRes('r-ig')">📋 Copier</button>
-          <button class="btn-secondary" onclick="partager('instagram')">📸 Instagram</button>
-        </div>
+        <div class="btn-row"><button class="btn-secondary" onclick="copyEl('r-ig')">📋 Copier</button></div>
       </div>
-
       <div class="res-panel" id="rp-ht">
         <div class="result-box accent" id="r-ht"><span class="placeholder">En attente...</span></div>
-        <button class="btn-secondary" style="width:100%" onclick="copyRes('r-ht')">📋 Copier Hashtags</button>
+        <button class="btn-secondary" style="width:100%" onclick="copyEl('r-ht')">📋 Copier Hashtags</button>
       </div>
-
       <div class="res-panel" id="rp-ac">
         <div class="result-box" id="r-ac"><span class="placeholder">En attente...</span></div>
-        <button class="btn-secondary" style="width:100%" onclick="copyRes('r-ac')">📋 Copier Accroches</button>
+        <button class="btn-secondary" style="width:100%" onclick="copyEl('r-ac')">📋 Copier Accroches</button>
       </div>
-
-      <!-- DIFFUSION RAPIDE -->
-      <div style="margin-top:14px;">
+      <div style="margin-top:12px;">
         <div class="field-label">Diffusion Rapide</div>
         <div class="share-grid">
           <button class="share-btn btn-fb" onclick="partager('facebook')">📘 Facebook</button>
@@ -742,148 +266,267 @@ select { -webkit-appearance: none; }
           <button class="share-btn btn-tk" onclick="partager('tiktok')">🎵 TikTok</button>
         </div>
       </div>
-
-      <!-- SAUVER POUR CLIENT -->
-      <button class="btn-gold" style="margin-top:12px;" onclick="sauverCampagne()">💾 SAUVER POUR LE CLIENT</button>
+      <button class="btn-gold" style="margin-top:12px;" onclick="sauverClient()">💾 SAUVER POUR LE CLIENT</button>
     </div>
   </div>
 </div>
 
-<!-- ===================== PAGE CLIENTS ===================== -->
+<!-- ======= PAGE BUDGET ======= -->
+<div class="page" id="page-budget">
+  <div class="card">
+    <div class="card-accent-gold"></div>
+    <div class="card-title" style="color:var(--gold)">🧮 Calculateur de Budget Pub</div>
+
+    <div class="field-label">Budget total disponible (FCFA)</div>
+    <input type="number" id="b-budget" placeholder="Ex: 5000" oninput="calcBudget()">
+
+    <div class="field-label">Durée de la campagne</div>
+    <div class="chips" id="c-duree">
+      <div class="chip sel" data-val="3">3 jours</div>
+      <div class="chip" data-val="7">7 jours</div>
+      <div class="chip" data-val="14">14 jours</div>
+      <div class="chip" data-val="30">30 jours</div>
+    </div>
+
+    <div class="field-label">Réseau publicitaire</div>
+    <div class="chips" id="c-reseau-budget">
+      <div class="chip sel" data-val="facebook">📘 Facebook Ads</div>
+      <div class="chip" data-val="tiktok">🎵 TikTok Ads</div>
+      <div class="chip" data-val="google">🔍 Google Ads</div>
+    </div>
+
+    <div class="field-label">Zone géographique</div>
+    <div class="chips" id="c-zone-budget">
+      <div class="chip sel" data-val="benin">🇧🇯 Bénin</div>
+      <div class="chip" data-val="afrique">🌍 Afrique Franco.</div>
+      <div class="chip" data-val="france">🇫🇷 France</div>
+      <div class="chip" data-val="mondial">🌐 Mondial</div>
+    </div>
+  </div>
+
+  <div class="card" id="calc-results">
+    <div class="card-accent-gold"></div>
+    <div class="card-title" style="color:var(--gold)">📊 Résultats Estimés</div>
+    <div class="calc-grid">
+      <div class="calc-result-card"><div class="calc-num gold" id="c-jour">0</div><div class="calc-lbl">Budget/Jour (FCFA)</div></div>
+      <div class="calc-result-card"><div class="calc-num accent" id="c-portee">0</div><div class="calc-lbl">Personnes/Jour</div></div>
+      <div class="calc-result-card"><div class="calc-num green" id="c-total-portee">0</div><div class="calc-lbl">Portée Totale</div></div>
+      <div class="calc-result-card"><div class="calc-num pink" id="c-clics">0</div><div class="calc-lbl">Clics Estimés</div></div>
+    </div>
+
+    <div class="field-label">Recommandation IA</div>
+    <div class="result-box" id="c-conseil" style="min-height:60px;font-size:.82rem;">
+      <span class="placeholder">Entre ton budget pour voir les recommandations...</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-accent-gold"></div>
+    <div class="card-title">💡 Règles d'Or du Budget</div>
+    <div style="font-size:.82rem;line-height:1.8;color:var(--text)">
+✅ <strong>Commence avec 3 000 FCFA/jour</strong> pour tester<br>
+✅ <strong>Attends 3 jours</strong> avant de juger les résultats<br>
+✅ <strong>Double si ça marche</strong>, change le contenu si non<br>
+✅ <strong>Publie entre 19h-22h</strong> pour max de vues au Bénin<br>
+✅ <strong>Choisis "Messages"</strong> comme objectif, pas "Notoriété"<br>
+❌ <strong>Ne cible jamais</strong> tout le Bénin sans affiner l'âge<br>
+❌ <strong>Ne change pas</strong> le budget tous les jours<br>
+❌ <strong>Évite trop de texte</strong> sur les images
+    </div>
+  </div>
+</div>
+
+<!-- ======= PAGE RÉSEAU ======= -->
+<div class="page" id="page-reseau">
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-title">📊 Quel Réseau Choisir ?</div>
+    <div class="field-label">Ton secteur</div>
+    <div class="chips" id="c-secteur-reseau">
+      <div class="chip sel" data-val="Formation">📚 Formation</div>
+      <div class="chip" data-val="Immobilier">🏢 Immo</div>
+      <div class="chip" data-val="E-commerce">🛒 E-com</div>
+      <div class="chip" data-val="Restauration">🍽️ Resto</div>
+      <div class="chip" data-val="Mode">👗 Mode</div>
+      <div class="chip" data-val="Services">💼 Services</div>
+    </div>
+    <div class="field-label">Ton budget</div>
+    <div class="chips" id="c-budget-reseau">
+      <div class="chip sel" data-val="petit">💰 Petit (&lt;5000F)</div>
+      <div class="chip" data-val="moyen">💰💰 Moyen (5k-20k)</div>
+      <div class="chip" data-val="grand">💰💰💰 Grand (+20k)</div>
+    </div>
+    <button class="btn-primary" onclick="compareReseaux()">📊 ANALYSER LES RÉSEAUX</button>
+    <div class="ai-loading" id="reseau-load" style="margin-top:10px;"><div class="ai-bar"><div class="ai-bar-fill"></div></div><div class="ai-label">⚡ ANALYSE EN COURS...</div></div>
+  </div>
+
+  <div id="reseau-results" style="display:none;">
+    <div class="result-box" id="r-reseau" style="min-height:100px;"></div>
+    <button class="btn-secondary" style="width:100%;margin-top:8px;" onclick="copyEl('r-reseau')">📋 Copier l'Analyse</button>
+  </div>
+
+  <!-- Comparaison visuelle fixe -->
+  <div class="card" style="margin-top:12px;">
+    <div class="card-accent"></div>
+    <div class="card-title">📱 Comparaison Rapide</div>
+
+    <div class="network-card">
+      <div class="network-header">
+        <div class="network-icon">📘</div>
+        <div><div class="network-name">Facebook Ads</div><div style="font-size:.65rem;color:var(--muted)">Meilleur pour l'Afrique</div></div>
+        <div class="network-score score-best">⭐ MEILLEUR</div>
+      </div>
+      <div class="network-bars">
+        <div class="network-bar-row"><span class="network-bar-label">Portée</span><div class="network-bar-track"><div class="network-bar-fill" style="width:95%;background:linear-gradient(90deg,#1877F2,#4FA3FF)"></div></div></div>
+        <div class="network-bar-row"><span class="network-bar-label">Coût</span><div class="network-bar-track"><div class="network-bar-fill" style="width:30%;background:var(--green)"></div></div><span style="font-size:.65rem;color:var(--green)">Faible</span></div>
+        <div class="network-bar-row"><span class="network-bar-label">Résultats</span><div class="network-bar-track"><div class="network-bar-fill" style="width:90%;background:var(--gold)"></div></div></div>
+      </div>
+    </div>
+
+    <div class="network-card">
+      <div class="network-header">
+        <div class="network-icon">🎵</div>
+        <div><div class="network-name">TikTok Ads</div><div style="font-size:.65rem;color:var(--muted)">Viral pour les jeunes</div></div>
+        <div class="network-score score-good">⭐ BON</div>
+      </div>
+      <div class="network-bars">
+        <div class="network-bar-row"><span class="network-bar-label">Portée</span><div class="network-bar-track"><div class="network-bar-fill" style="width:80%;background:linear-gradient(90deg,#010101,#69C9D0)"></div></div></div>
+        <div class="network-bar-row"><span class="network-bar-label">Coût</span><div class="network-bar-track"><div class="network-bar-fill" style="width:55%;background:var(--gold)"></div></div><span style="font-size:.65rem;color:var(--gold)">Moyen</span></div>
+        <div class="network-bar-row"><span class="network-bar-label">Viral</span><div class="network-bar-track"><div class="network-bar-fill" style="width:95%;background:var(--pink)"></div></div></div>
+      </div>
+    </div>
+
+    <div class="network-card">
+      <div class="network-header">
+        <div class="network-icon">📸</div>
+        <div><div class="network-name">Instagram Ads</div><div style="font-size:.65rem;color:var(--muted)">Mode, lifestyle, beauté</div></div>
+        <div class="network-score score-ok">✓ OK</div>
+      </div>
+      <div class="network-bars">
+        <div class="network-bar-row"><span class="network-bar-label">Portée</span><div class="network-bar-track"><div class="network-bar-fill" style="width:70%;background:linear-gradient(90deg,#f09433,#bc1888)"></div></div></div>
+        <div class="network-bar-row"><span class="network-bar-label">Coût</span><div class="network-bar-track"><div class="network-bar-fill" style="width:70%;background:var(--red)"></div></div><span style="font-size:.65rem;color:var(--red)">Élevé</span></div>
+        <div class="network-bar-row"><span class="network-bar-label">Visuel</span><div class="network-bar-track"><div class="network-bar-fill" style="width:95%;background:linear-gradient(90deg,#f09433,#bc1888)"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= PAGE BRIEF ======= -->
+<div class="page" id="page-brief">
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-title">📋 Générateur de Brief Publicitaire</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;">Le brief est un document complet à copier-coller directement dans Facebook Ads, TikTok Ads ou à envoyer à un gestionnaire pub.</p>
+
+    <div class="field-label">Client / Entreprise *</div>
+    <input type="text" id="br-client" placeholder="Nom du client">
+
+    <div class="field-label">Produit / Service *</div>
+    <textarea id="br-produit" placeholder="Décris précisément le produit ou service..."></textarea>
+
+    <div class="field-label">Objectif de la campagne</div>
+    <div class="chips" id="c-objectif">
+      <div class="chip sel" data-val="Messages WhatsApp">💬 Messages WhatsApp</div>
+      <div class="chip" data-val="Trafic vers le lien">🔗 Trafic lien</div>
+      <div class="chip" data-val="Ventes directes">💰 Ventes</div>
+      <div class="chip" data-val="Notoriété de marque">👁️ Notoriété</div>
+      <div class="chip" data-val="Followers / Abonnés">👥 Followers</div>
+    </div>
+
+    <div class="field-label">Budget total (FCFA)</div>
+    <input type="number" id="br-budget" placeholder="Ex: 15000">
+
+    <div class="field-label">Zone géographique</div>
+    <input type="text" id="br-zone" placeholder="Ex: Cotonou, Tout le Bénin, France...">
+
+    <div class="field-label">Âge cible</div>
+    <div class="chips" id="c-age">
+      <div class="chip" data-val="13-17 ans">13-17</div>
+      <div class="chip sel" data-val="18-24 ans">18-24</div>
+      <div class="chip sel" data-val="25-34 ans">25-34</div>
+      <div class="chip" data-val="35-44 ans">35-44</div>
+      <div class="chip" data-val="45-54 ans">45-54</div>
+      <div class="chip" data-val="55+ ans">55+</div>
+    </div>
+
+    <div class="field-label">Genre cible</div>
+    <div class="chips" id="c-genre">
+      <div class="chip sel" data-val="Tous">👥 Tous</div>
+      <div class="chip" data-val="Hommes">👨 Hommes</div>
+      <div class="chip" data-val="Femmes">👩 Femmes</div>
+    </div>
+
+    <button class="btn-primary" id="btn-brief" onclick="genBrief()">📋 GÉNÉRER LE BRIEF COMPLET</button>
+    <div class="ai-loading" id="brief-load" style="margin-top:10px;"><div class="ai-bar"><div class="ai-bar-fill"></div></div><div class="ai-label">⚡ GÉNÉRATION DU BRIEF...</div></div>
+  </div>
+
+  <div id="brief-result" style="display:none;">
+    <div class="card">
+      <div class="card-accent"></div>
+      <div class="card-title">📄 Brief Publicitaire Complet</div>
+      <div class="result-box" id="r-brief" style="min-height:200px;"></div>
+      <div class="btn-row" style="margin-top:8px;">
+        <button class="btn-secondary" onclick="copyEl('r-brief')">📋 Copier</button>
+        <button class="btn-secondary" onclick="envoyerBrief()">📲 Envoyer au Client</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= PAGE AUDIENCE ======= -->
+<div class="page" id="page-audience">
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-title">🎯 Générateur d'Audiences Facebook</div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;">Claude génère les centres d'intérêt exacts à entrer dans Facebook Ads pour cibler les bonnes personnes.</p>
+
+    <div class="field-label">Produit / Service *</div>
+    <textarea id="aud-produit" placeholder="Ex: Pièces de rechange téléphone, vente et réparation iPhone Samsung..."></textarea>
+
+    <div class="field-label">Qui sont tes clients idéaux ?</div>
+    <textarea id="aud-client" placeholder="Ex: Techniciens réparateurs, revendeurs de téléphones, jeunes entrepreneurs tech..."></textarea>
+
+    <div class="field-label">Zone</div>
+    <input type="text" id="aud-zone" placeholder="Ex: Cotonou, Bénin, Afrique francophone">
+
+    <button class="btn-primary" id="btn-aud" onclick="genAudience()">🎯 GÉNÉRER MON AUDIENCE</button>
+    <div class="ai-loading" id="aud-load" style="margin-top:10px;"><div class="ai-bar"><div class="ai-bar-fill"></div></div><div class="ai-label">⚡ GÉNÉRATION DE L'AUDIENCE...</div></div>
+  </div>
+
+  <div id="aud-result" style="display:none;">
+    <div class="card">
+      <div class="card-accent"></div>
+      <div class="card-title">🎯 Ton Audience Facebook Ads</div>
+      <div class="result-box" id="r-aud" style="min-height:150px;"></div>
+      <button class="btn-secondary" style="width:100%;margin-top:8px;" onclick="copyEl('r-aud')">📋 Copier l'Audience</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======= PAGE CLIENTS ======= -->
 <div class="page" id="page-clients">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
     <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;">👥 Mes Clients</div>
     <button class="btn-secondary" onclick="openModal('modal-client')">+ Ajouter</button>
   </div>
   <div id="clients-list">
-    <div class="empty">
-      <div class="empty-icon">👥</div>
-      <div class="empty-text">Aucun client encore.<br>Ajoute ton premier client pour commencer.</div>
+    <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+      <div style="font-size:2.5rem;margin-bottom:10px">👥</div>
+      <div style="font-size:.82rem">Aucun client encore.</div>
     </div>
   </div>
 </div>
 
-<!-- ===================== PAGE CALENDRIER ===================== -->
-<div class="page" id="page-calendrier">
-  <div class="card">
-    <div class="card-accent"></div>
-    <div class="card-title">🗓️ Plan de Contenu 30 Jours</div>
-
-    <div class="field-label">Client concerné</div>
-    <input type="text" id="cal-client" placeholder="Nom du client ou projet">
-
-    <div class="field-label">Secteur</div>
-    <input type="text" id="cal-secteur" placeholder="Ex: Formation, E-commerce, Immobilier...">
-
-    <div class="field-label">Objectif principal</div>
-    <textarea id="cal-objectif" placeholder="Ex: Vendre ma formation, Attirer des prospects, Booster ma page..."></textarea>
-
-    <button class="btn-primary" id="btn-cal" onclick="genCalendrier()">🗓️ GÉNÉRER LE PLAN 30 JOURS</button>
-
-    <div class="ai-loading" id="cal-loading" style="margin-top:10px;">
-      <div class="ai-bar"><div class="ai-bar-fill"></div></div>
-      <div class="ai-label">⚡ GÉNÉRATION DU CALENDRIER...</div>
-    </div>
-  </div>
-
-  <div id="cal-result" style="display:none;">
-    <div class="card">
-      <div class="card-accent"></div>
-      <div class="card-title">📅 Ton Plan 30 Jours</div>
-      <div class="result-box" id="r-cal" style="min-height:200px;"></div>
-      <button class="btn-secondary" style="width:100%;margin-top:8px;" onclick="copyRes('r-cal')">📋 Copier le Plan</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== PAGE RAPPORT ===================== -->
-<div class="page" id="page-rapport">
-  <div class="card">
-    <div class="card-accent"></div>
-    <div class="card-title">📊 Rapport Client Professionnel</div>
-
-    <div class="field-label">Nom du client</div>
-    <input type="text" id="rap-client" placeholder="Nom du client">
-
-    <div class="field-label">Période</div>
-    <input type="text" id="rap-periode" placeholder="Ex: Juin 2026, Semaine 1...">
-
-    <div class="field-label">Plateformes utilisées</div>
-    <input type="text" id="rap-plateformes" placeholder="Ex: Facebook, TikTok, WhatsApp">
-
-    <div class="field-label">Résultats obtenus</div>
-    <textarea id="rap-resultats" placeholder="Ex: 5 posts publiés, 200 vues, 15 messages reçus..."></textarea>
-
-    <button class="btn-primary" id="btn-rap" onclick="genRapport()">📊 GÉNÉRER LE RAPPORT</button>
-
-    <div class="ai-loading" id="rap-loading" style="margin-top:10px;">
-      <div class="ai-bar"><div class="ai-bar-fill"></div></div>
-      <div class="ai-label">⚡ GÉNÉRATION DU RAPPORT...</div>
-    </div>
-  </div>
-
-  <div id="rap-result" style="display:none;">
-    <div class="card">
-      <div class="card-accent"></div>
-      <div class="card-title" style="color:var(--gold);">📋 Rapport Professionnel</div>
-      <div class="result-box" id="r-rap" style="min-height:200px;"></div>
-      <div class="btn-row" style="margin-top:8px;">
-        <button class="btn-secondary" onclick="copyRes('r-rap')">📋 Copier</button>
-        <button class="btn-secondary" onclick="partagerRapport()">📲 Envoyer au Client</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== PAGE BIO ===================== -->
-<div class="page" id="page-bio">
-  <div class="card">
-    <div class="card-accent"></div>
-    <div class="card-title">✍️ Générateur de Bio Professionnelle</div>
-
-    <div class="field-label">Ton nom / Nom du client</div>
-    <input type="text" id="bio-nom" placeholder="Ex: Emmanuel Sindedji, ZAGA Agency...">
-
-    <div class="field-label">Ce que tu fais</div>
-    <textarea id="bio-activite" placeholder="Ex: Je crée du contenu pour les entreprises africaines, formation dropshipping..."></textarea>
-
-    <div class="field-label">Réseau social cible</div>
-    <div class="chips" id="chips-reseau">
-      <div class="chip sel" data-val="TikTok">🎵 TikTok</div>
-      <div class="chip" data-val="Instagram">📸 Instagram</div>
-      <div class="chip" data-val="Facebook">📘 Facebook</div>
-      <div class="chip" data-val="LinkedIn">💼 LinkedIn</div>
-      <div class="chip" data-val="Twitter/X">🐦 Twitter/X</div>
-    </div>
-
-    <button class="btn-primary" id="btn-bio" onclick="genBio()">✍️ GÉNÉRER MA BIO</button>
-
-    <div class="ai-loading" id="bio-loading" style="margin-top:10px;">
-      <div class="ai-bar"><div class="ai-bar-fill"></div></div>
-      <div class="ai-label">⚡ GÉNÉRATION DE LA BIO...</div>
-    </div>
-  </div>
-
-  <div id="bio-result" style="display:none;">
-    <div class="card">
-      <div class="card-accent"></div>
-      <div class="card-title">✨ Tes Bios Optimisées</div>
-      <div class="result-box" id="r-bio" style="min-height:120px;"></div>
-      <button class="btn-secondary" style="width:100%;margin-top:8px;" onclick="copyRes('r-bio')">📋 Copier la Bio</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL AJOUTER CLIENT -->
+<!-- MODAL CLIENT -->
 <div class="overlay" id="modal-client">
   <div class="modal">
     <div class="modal-title">👥 Nouveau Client</div>
-    <div class="field-label">Nom du client / Entreprise *</div>
-    <input type="text" class="mc-nom" id="mc-nom" placeholder="Ex: Boutique Mode Cotonou">
+    <div class="field-label">Nom *</div>
+    <input type="text" id="mc-nom" placeholder="Nom du client ou entreprise">
     <div class="field-label">Secteur</div>
-    <input type="text" id="mc-secteur" placeholder="Ex: Mode, Formation, Immo...">
-    <div class="field-label">Notes</div>
-    <textarea id="mc-notes" placeholder="Infos sur le client, budget, objectifs..."></textarea>
+    <input type="text" id="mc-secteur" placeholder="Ex: Mode, Tech, Immo...">
+    <div class="field-label">Contact WhatsApp</div>
+    <input type="text" id="mc-phone" placeholder="+229 XX XX XX XX">
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeModal('modal-client')">Annuler</button>
       <button class="btn-confirm" onclick="ajouterClient()">✅ Ajouter</button>
@@ -891,513 +534,336 @@ select { -webkit-appearance: none; }
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
 // STATE
-// ============================================================
-let state = {
-  clients: [],
-  campagnes: [],
-  stats: { posts: 0, partages: 0 }
-};
+let state={clients:[],campagnes:[],stats:{posts:0,briefs:0}};
+let secteur='Formation',geoSel=['Bénin'],ton='Professionnel';
+let secteurReseau='Formation',budgetReseau='petit';
+let objectifBrief='Messages WhatsApp',ageSel=['18-24 ans','25-34 ans'],genreSel=['Tous'];
+let dureeBudget=3,reseauBudget='facebook',zoneBudget='benin';
+let mediaB64=null,mediaType=null;
+let lastContent={};
 
-let secteur = 'Formation';
-let geoSel = ['Bénin'];
-let ton = 'Professionnel';
-let reseauBio = 'TikTok';
-let mediaBase64 = null;
-let mediaType = null;
+function loadState(){try{const s=localStorage.getItem('zaga_ult');if(s)state={...state,...JSON.parse(s)};}catch(e){}}
+function saveState(){localStorage.setItem('zaga_ult',JSON.stringify(state));}
 
-// Last generated
-let lastContent = {};
-
-// Load
-function loadState() {
-  const s = localStorage.getItem('zaga_agency');
-  if (s) try { state = {...state, ...JSON.parse(s)}; } catch(e){}
-}
-function saveState() { localStorage.setItem('zaga_agency', JSON.stringify(state)); }
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-function goTab(tab) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-nav-item').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-' + tab).classList.add('active');
-  event.target.classList.add('active');
-  if (tab === 'clients') renderClients();
+// NAV
+function goTab(tab,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-nav-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  el.classList.add('active');
+  if(tab==='clients')renderClients();
   updateStats();
 }
 
-// ============================================================
-// CHIPS
-// ============================================================
-function initChips(id, stateKey, single = true) {
-  document.querySelectorAll(`#${id} .chip`).forEach(chip => {
-    chip.addEventListener('click', () => {
-      if (single) {
-        document.querySelectorAll(`#${id} .chip`).forEach(c => c.classList.remove('sel', 'sel-gold'));
-        chip.classList.add(id === 'chips-geo' ? 'sel-gold' : 'sel');
-        if (stateKey === 'secteur') secteur = chip.dataset.val;
-        if (stateKey === 'ton') ton = chip.dataset.val;
-        if (stateKey === 'reseau') reseauBio = chip.dataset.val;
+// CHIPS INIT
+function initChips(id,cb,multi=false){
+  document.querySelectorAll('#'+id+' .chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      if(!multi){
+        document.querySelectorAll('#'+id+' .chip').forEach(c=>c.classList.remove('sel','sel-gold','sel-green'));
+        const cls=id==='c-geo'||id==='c-zone-budget'?'sel-gold':'sel';
+        chip.classList.add(cls);
       } else {
-        const cls = id === 'chips-geo' ? 'sel-gold' : 'sel';
-        chip.classList.toggle(cls);
-        const val = chip.dataset.val;
-        if (geoSel.includes(val)) geoSel = geoSel.filter(g => g !== val);
-        else geoSel.push(val);
+        chip.classList.toggle('sel');
       }
+      cb(chip.dataset.val, chip);
     });
   });
 }
 
-initChips('chips-secteur', 'secteur', true);
-initChips('chips-geo', 'geo', false);
-initChips('chips-ton', 'ton', true);
-initChips('chips-reseau', 'reseau', true);
+initChips('c-secteur',v=>secteur=v);
+initChips('c-geo',()=>{geoSel=[...document.querySelectorAll('#c-geo .sel-gold')].map(c=>c.dataset.val)},true);
+initChips('c-ton',v=>ton=v);
+initChips('c-secteur-reseau',v=>secteurReseau=v);
+initChips('c-budget-reseau',v=>budgetReseau=v);
+initChips('c-objectif',v=>objectifBrief=v);
+initChips('c-age',()=>ageSel=[...document.querySelectorAll('#c-age .sel')].map(c=>c.dataset.val),true);
+initChips('c-genre',()=>genreSel=[...document.querySelectorAll('#c-genre .sel')].map(c=>c.dataset.val),true);
+initChips('c-duree',v=>{dureeBudget=parseInt(v);calcBudget()});
+initChips('c-reseau-budget',v=>{reseauBudget=v;calcBudget()});
+initChips('c-zone-budget',v=>{zoneBudget=v;calcBudget()});
 
-// ============================================================
 // MEDIA
-// ============================================================
-function handleMedia(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    const data = ev.target.result;
-    mediaBase64 = data.split(',')[1];
-    mediaType = file.type;
-    if (file.type.startsWith('image/')) {
-      const prev = document.getElementById('media-preview');
-      prev.src = data;
-      prev.style.display = 'block';
-      document.querySelector('.upload-text').textContent = '✅ Photo ajoutée';
-    } else {
-      document.querySelector('.upload-text').textContent = '✅ Vidéo ajoutée (Claude va analyser)';
+function handleMedia(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const data=ev.target.result;
+    mediaB64=data.split(',')[1];mediaType=file.type;
+    if(file.type.startsWith('image/')){
+      const p=document.getElementById('media-preview');p.src=data;p.style.display='block';
+      document.querySelector('#upload-zone div:nth-child(3)').textContent='✅ Photo ajoutée — Claude va l\'analyser';
     }
-  };
-  reader.readAsDataURL(file);
+  };reader.readAsDataURL(file);
 }
 
-// ============================================================
 // GÉNÉRATION PRINCIPALE
-// ============================================================
-async function generer() {
-  const client = document.getElementById('g-client').value.trim();
-  const offre = document.getElementById('g-offre').value.trim();
-  const lien = document.getElementById('g-lien').value.trim();
+async function generer(){
+  const offre=document.getElementById('g-offre').value.trim();
+  if(!offre){showToast('Décris l\'offre !','err');return;}
+  const client=document.getElementById('g-client').value.trim();
+  const lien=document.getElementById('g-lien').value.trim();
+  const geo=geoSel.length>0?geoSel.join(', '):'Bénin';
 
-  if (!offre) { showToast('Décris l\'offre d\'abord !', 'err'); return; }
+  document.getElementById('btn-gen').disabled=true;
+  document.getElementById('ai-load').classList.add('show');
+  document.getElementById('results-block').style.display='none';
 
-  document.getElementById('btn-gen').disabled = true;
-  document.getElementById('ai-loading').classList.add('show');
-  document.getElementById('results-block').style.display = 'none';
+  const prompt=`Tu es ZAGA ULTIMATE, expert marketing digital Afrique francophone.
 
-  const geo = geoSel.length > 0 ? geoSel.join(', ') : 'Afrique Francophone';
+CAMPAGNE:
+- Client: ${client||'Non précisé'}
+- Secteur: ${secteur}
+- Offre: ${offre}
+- Lien: ${lien||'Non précisé'}
+- Marchés: ${geo}
+- Ton: ${ton}${mediaB64?' (image produit fournie, adapte le contenu)':''}
 
-  const systemPrompt = `Tu es ZAGA AGENCY MACHINE, le meilleur expert en marketing digital et copywriting pour l'Afrique francophone et la diaspora africaine. Tu crées du contenu viral, professionnel et percutant adapté aux marchés africains.`;
+Génère UNIQUEMENT ce JSON brut sans markdown:
+{"facebook":"Post Facebook 180-220 mots, emojis, adapté groupes africains, CTA fort${lien?', lien '+lien:''}","tiktok":"Script TikTok:\\nACCROCHE (3sec):\\n[texte explosif]\\n\\nDÉVELOPPEMENT (45sec):\\n[contenu step by step]\\n\\nCTA (12sec):\\n[action claire]","whatsapp":"Message WhatsApp 80-100 mots, naturel, humain${lien?', avec lien '+lien:''}","instagram":"Légende Instagram 100-150 mots, lifestyle, emojis${lien?', lien en bio ou '+lien:''}","hashtags":"25 hashtags pertinents #tag1 #tag2...","accroches":"5 accroches virales max 8 mots chacune:\\n1. ...\\n2. ...\\n3. ...\\n4. ...\\n5. ..."}`;
 
-  const userPrompt = `Génère du contenu marketing complet pour cette campagne :
-
-CLIENT/PROJET : ${client || 'Non précisé'}
-SECTEUR : ${secteur}
-OFFRE : ${offre}
-LIEN : ${lien || 'Non précisé'}
-MARCHÉS : ${geo}
-TON : ${ton}${mediaBase64 && mediaType?.startsWith('image/') ? '\nIMAGE : Une photo du produit/service a été fournie, adapte le contenu en conséquence.' : ''}
-
-Génère UNIQUEMENT ce JSON sans markdown ni explication :
-{
-  "facebook": "Post Facebook 180-220 mots, emojis stratégiques, adapté aux groupes Facebook africains, accroche forte dès la 1ère ligne, CTA puissant à la fin${lien ? ', inclure le lien ' + lien : ''}",
-  "tiktok": "Script TikTok structuré:\\nACCROCHE (3 sec):\\n[texte explosif]\\n\\nDÉVELOPPEMENT (45 sec):\\n[contenu principal step by step]\\n\\nCTA FINAL (12 sec):\\n[appel à l'action clair]",
-  "whatsapp": "Message WhatsApp broadcast 80-100 mots, naturel et humain, donne envie de répondre${lien ? ', avec le lien ' + lien : ''}",
-  "instagram": "Légende Instagram 100-150 mots avec emojis, lifestyle et inspirant, adapté à l'esthétique Instagram africaine${lien ? ', mention du lien en bio ou ' + lien : ''}",
-  "hashtags": "#tag1 #tag2 ... (25 hashtags ultra-pertinents pour ${secteur} et ${geo}, mix français/anglais)",
-  "accroches": "5 accroches virales numérotées pour vidéos TikTok/Reels, chacune de max 8 mots, qui font STOPPER le scroll :\\n1. ...\\n2. ...\\n3. ...\\n4. ...\\n5. ..."
-}`;
-
-  try {
-    const messages = [];
-
-    if (mediaBase64 && mediaType?.startsWith('image/')) {
-      messages.push({
-        role: 'user',
-        content: [
-          { type: 'image', source: { type: 'base64', media_type: mediaType, data: mediaBase64 } },
-          { type: 'text', text: userPrompt }
-        ]
-      });
+  try{
+    const msgs=[];
+    if(mediaB64&&mediaType?.startsWith('image/')){
+      msgs.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:mediaType,data:mediaB64}},{type:'text',text:prompt}]});
     } else {
-      messages.push({ role: 'user', content: userPrompt });
+      msgs.push({role:'user',content:prompt});
     }
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages
-      })
-    });
-
-    const data = await response.json();
-    let text = data.content?.map(i => i.text || '').join('') || '';
-    text = text.replace(/```json|```/g, '').trim();
-
-    const result = JSON.parse(text);
-    lastContent = result;
-
-    document.getElementById('r-fb').textContent = result.facebook || '';
-    document.getElementById('r-tk').textContent = result.tiktok || '';
-    document.getElementById('r-wa').textContent = result.whatsapp || '';
-    document.getElementById('r-ig').textContent = result.instagram || '';
-    document.getElementById('r-ht').textContent = result.hashtags || '';
-    document.getElementById('r-ac').textContent = result.accroches || '';
-
-    document.getElementById('results-block').style.display = 'block';
-
-    state.stats.posts++;
-    saveState();
-    updateStats();
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:msgs})});
+    const data=await res.json();
+    let text=data.content?.map(i=>i.text||'').join('')||'';
+    text=text.replace(/```json|```/g,'').trim();
+    const r=JSON.parse(text);
+    lastContent=r;
+    document.getElementById('r-fb').textContent=r.facebook||'';
+    document.getElementById('r-tk').textContent=r.tiktok||'';
+    document.getElementById('r-wa').textContent=r.whatsapp||'';
+    document.getElementById('r-ig').textContent=r.instagram||'';
+    document.getElementById('r-ht').textContent=r.hashtags||'';
+    document.getElementById('r-ac').textContent=r.accroches||'';
+    document.getElementById('results-block').style.display='block';
+    state.stats.posts++;saveState();updateStats();
     showToast('✅ Contenu généré !');
-
-  } catch (err) {
-    showToast('Erreur IA — réessaie', 'err');
-    console.error(err);
-  }
-
-  document.getElementById('btn-gen').disabled = false;
-  document.getElementById('ai-loading').classList.remove('show');
+  } catch(err){showToast('Erreur IA — réessaie','err');console.error(err);}
+  document.getElementById('btn-gen').disabled=false;
+  document.getElementById('ai-load').classList.remove('show');
 }
 
-// ============================================================
-// RÉSULTATS TABS
-// ============================================================
-function resTab(tab) {
-  document.querySelectorAll('.res-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.res-panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('rp-' + tab).classList.add('active');
+// CALCULATEUR BUDGET
+function calcBudget(){
+  const budget=parseFloat(document.getElementById('b-budget').value)||0;
+  if(!budget)return;
+  // Ratios selon réseau et zone
+  const cpmMap={facebook:{benin:150,afrique:200,france:800,mondial:500},tiktok:{benin:250,afrique:350,france:1200,mondial:800},google:{benin:300,afrique:400,france:1500,mondial:1000}};
+  const ctr={facebook:0.025,tiktok:0.018,google:0.035};
+  const cpm=cpmMap[reseauBudget]?.[zoneBudget]||300;
+  const parJour=Math.round(budget/dureeBudget);
+  const personnesJour=Math.round((parJour/cpm)*1000);
+  const totalPortee=personnesJour*dureeBudget;
+  const clics=Math.round(totalPortee*ctr[reseauBudget]);
+
+  document.getElementById('c-jour').textContent=parJour.toLocaleString();
+  document.getElementById('c-portee').textContent=personnesJour.toLocaleString();
+  document.getElementById('c-total-portee').textContent=totalPortee>=1000?(totalPortee/1000).toFixed(1)+'K':totalPortee;
+  document.getElementById('c-clics').textContent=clics.toLocaleString();
+
+  let conseil='';
+  if(parJour<1000)conseil='⚠️ Budget trop faible. Minimum recommandé : 1 500 FCFA/jour pour des résultats mesurables.';
+  else if(parJour<3000)conseil='✅ Budget correct pour tester. Lance 3 jours, observe les résultats, puis double si ça marche.';
+  else if(parJour<10000)conseil='🔥 Excellent budget ! Tu vas toucher beaucoup de monde. Assure-toi d\'avoir un bon contenu visuel.';
+  else conseil='💪 Budget puissant ! Pense à créer 2-3 versions différentes de ta pub et à tester laquelle performe le mieux (A/B test).';
+  document.getElementById('c-conseil').textContent=conseil;
 }
 
-// ============================================================
-// PARTAGER
-// ============================================================
-function partager(platform) {
-  const lien = document.getElementById('g-lien').value.trim();
-  const msg = lastContent.whatsapp || lastContent.facebook || '';
-
-  if (!msg) { showToast('Génère d\'abord le contenu', 'warn'); return; }
-
-  if (platform === 'facebook') {
-    window.open(lien ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien)}` : 'https://www.facebook.com/', '_blank');
-  } else if (platform === 'whatsapp') {
-    window.open(`https://wa.me/?text=${encodeURIComponent(lastContent.whatsapp || msg)}`, '_blank');
-  } else if (platform === 'telegram') {
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(lien || '')}&text=${encodeURIComponent(msg)}`, '_blank');
-  } else if (platform === 'tiktok') {
-    navigator.clipboard.writeText(lastContent.tiktok || '').then(() => {
-      showToast('📋 Script TikTok copié !');
-      setTimeout(() => window.open('https://www.tiktok.com/', '_blank'), 800);
-    });
-    return;
-  } else if (platform === 'instagram') {
-    navigator.clipboard.writeText(lastContent.instagram || '').then(() => {
-      showToast('📋 Légende Instagram copiée !');
-    });
-    return;
-  }
-
-  state.stats.partages++;
-  saveState();
-  updateStats();
-  showToast('🚀 Ouvert !');
+// COMPARATEUR RÉSEAUX
+async function compareReseaux(){
+  document.getElementById('reseau-load').classList.add('show');
+  document.getElementById('reseau-results').style.display='none';
+  const prompt=`Tu es expert en publicité digitale Afrique francophone. Analyse et recommande le meilleur réseau pub pour :
+- Secteur : ${secteurReseau}
+- Budget : ${budgetReseau==='petit'?'Petit (moins de 5000 FCFA/jour)':budgetReseau==='moyen'?'Moyen (5000-20000 FCFA/jour)':'Grand (plus de 20000 FCFA/jour)'}
+Donne une recommandation claire et structurée : quel réseau choisir en priorité, pourquoi, comment l'utiliser, les erreurs à éviter. Sois précis et pratique pour l'Afrique francophone.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    document.getElementById('r-reseau').textContent=data.content?.map(i=>i.text||'').join('')||'';
+    document.getElementById('reseau-results').style.display='block';
+  } catch(e){showToast('Erreur','err');}
+  document.getElementById('reseau-load').classList.remove('show');
 }
 
-// ============================================================
-// SAUVER CAMPAGNE
-// ============================================================
-function sauverCampagne() {
-  const client = document.getElementById('g-client').value.trim() || 'Client Inconnu';
-  if (!lastContent.facebook) { showToast('Génère d\'abord le contenu', 'warn'); return; }
+// BRIEF
+async function genBrief(){
+  const produit=document.getElementById('br-produit').value.trim();
+  const client=document.getElementById('br-client').value.trim();
+  if(!produit||!client){showToast('Remplis les champs obligatoires','err');return;}
+  const budget=document.getElementById('br-budget').value.trim();
+  const zone=document.getElementById('br-zone').value.trim();
 
-  state.campagnes.unshift({
-    id: Date.now().toString(),
-    client,
-    secteur,
-    date: new Date().toLocaleDateString('fr-FR'),
-    content: { ...lastContent }
-  });
+  document.getElementById('btn-brief').disabled=true;
+  document.getElementById('brief-load').classList.add('show');
+  document.getElementById('brief-result').style.display='none';
 
-  // Ajouter client si pas existant
-  if (!state.clients.find(c => c.nom.toLowerCase() === client.toLowerCase())) {
-    state.clients.push({ id: Date.now().toString(), nom: client, secteur, notes: '', campagnes: 1, date: new Date().toLocaleDateString('fr-FR') });
-  } else {
-    const idx = state.clients.findIndex(c => c.nom.toLowerCase() === client.toLowerCase());
-    if (idx !== -1) state.clients[idx].campagnes = (state.clients[idx].campagnes || 0) + 1;
-  }
+  const prompt=`Génère un brief publicitaire professionnel complet et détaillé pour Facebook Ads / TikTok Ads :
 
-  saveState();
-  updateStats();
-  showToast('💾 Campagne sauvegardée !');
+CLIENT : ${client}
+PRODUIT/SERVICE : ${produit}
+OBJECTIF : ${objectifBrief}
+BUDGET TOTAL : ${budget||'Non précisé'} FCFA
+ZONE : ${zone||'Bénin'}
+ÂGES : ${ageSel.join(', ')}
+GENRE : ${genreSel.join(', ')}
+
+Le brief doit contenir :
+1. RÉSUMÉ DE LA CAMPAGNE
+2. OBJECTIF SMART (Spécifique, Mesurable, Atteignable, Réaliste, Temporel)
+3. AUDIENCE CIBLE DÉTAILLÉE (âge, genre, centres d'intérêt, comportements)
+4. PARAMÈTRES FACEBOOK ADS (à copier-coller exactement)
+5. BUDGET ET PLANNING JOUR PAR JOUR
+6. TEXTE DE LA PUB (titre + description + CTA)
+7. MÉTRIQUES À SURVEILLER
+8. RECOMMANDATIONS SPÉCIALES
+
+Format professionnel, prêt à être utilisé directement.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    document.getElementById('r-brief').textContent=data.content?.map(i=>i.text||'').join('')||'';
+    document.getElementById('brief-result').style.display='block';
+    state.stats.briefs++;saveState();updateStats();
+    showToast('✅ Brief généré !');
+  } catch(e){showToast('Erreur','err');}
+  document.getElementById('btn-brief').disabled=false;
+  document.getElementById('brief-load').classList.remove('show');
 }
 
-// ============================================================
+function envoyerBrief(){
+  const text=document.getElementById('r-brief').textContent;
+  if(!text)return;
+  const phone=document.getElementById('mc-phone')?.value?.replace(/\D/g,'')||'';
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text.substring(0,1000))}...`,'_blank');
+}
+
+// AUDIENCE
+async function genAudience(){
+  const produit=document.getElementById('aud-produit').value.trim();
+  if(!produit){showToast('Décris ton produit','err');return;}
+  const client=document.getElementById('aud-client').value.trim();
+  const zone=document.getElementById('aud-zone').value.trim();
+
+  document.getElementById('btn-aud').disabled=true;
+  document.getElementById('aud-load').classList.add('show');
+  document.getElementById('aud-result').style.display='none';
+
+  const prompt=`Tu es expert en ciblage Facebook Ads pour l'Afrique francophone. Génère une audience Facebook Ads complète et précise pour :
+
+PRODUIT : ${produit}
+CLIENTS IDÉAUX : ${client||'Non précisé'}
+ZONE : ${zone||'Bénin'}
+
+Génère :
+1. CENTRES D'INTÉRÊT FACEBOOK (liste exacte à copier dans FB Ads, 15-20 centres)
+2. COMPORTEMENTS FACEBOOK à cibler
+3. DONNÉES DÉMOGRAPHIQUES précises (âge, genre, niveau d'éducation)
+4. AUDIENCES SIMILAIRES à créer
+5. AUDIENCES À EXCLURE (pour ne pas gaspiller le budget)
+6. CONSEIL DE CIBLAGE GÉOGRAPHIQUE précis pour ${zone||'le Bénin'}
+
+Sois très précis, donne les termes exacts tels qu'ils apparaissent dans Facebook Ads.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    document.getElementById('r-aud').textContent=data.content?.map(i=>i.text||'').join('')||'';
+    document.getElementById('aud-result').style.display='block';
+    showToast('✅ Audience générée !');
+  } catch(e){showToast('Erreur','err');}
+  document.getElementById('btn-aud').disabled=false;
+  document.getElementById('aud-load').classList.remove('show');
+}
+
 // CLIENTS
-// ============================================================
-function renderClients() {
-  const el = document.getElementById('clients-list');
-  if (state.clients.length === 0) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><div class="empty-text">Aucun client encore.<br>Ajoute ton premier client.</div></div>';
-    return;
-  }
-  el.innerHTML = '';
-  state.clients.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'client-card';
-    div.innerHTML = `
-      <div class="client-avatar">${c.nom.charAt(0).toUpperCase()}</div>
-      <div class="client-info">
-        <div class="client-name">${c.nom}</div>
-        <div class="client-meta">${c.secteur || 'Secteur non précisé'} · Ajouté ${c.date}</div>
-      </div>
-      <div class="client-posts">${c.campagnes || 0} camp.</div>
-    `;
+function renderClients(){
+  const el=document.getElementById('clients-list');
+  if(state.clients.length===0){el.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--muted)"><div style="font-size:2.5rem;margin-bottom:10px">👥</div><div style="font-size:.82rem">Aucun client encore.</div></div>';return;}
+  el.innerHTML='';
+  state.clients.forEach(c=>{
+    const div=document.createElement('div');
+    div.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;';
+    div.innerHTML=`<div style="width:44px;height:44px;background:linear-gradient(135deg,var(--accent2),var(--accent));border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:800;font-size:1rem;flex-shrink:0">${c.nom.charAt(0).toUpperCase()}</div><div style="flex:1"><div style="font-weight:600;font-size:.9rem">${c.nom}</div><div style="font-size:.7rem;color:var(--muted);margin-top:2px">${c.secteur} · ${c.date}</div></div><div style="font-family:Space Mono,monospace;font-size:.65rem;color:var(--accent);background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);border-radius:6px;padding:3px 8px">${c.campagnes||0} camp.</div>`;
     el.appendChild(div);
   });
 }
 
-function ajouterClient() {
-  const nom = document.getElementById('mc-nom').value.trim();
-  if (!nom) { showToast('Le nom est obligatoire', 'err'); return; }
-  state.clients.push({
-    id: Date.now().toString(),
-    nom,
-    secteur: document.getElementById('mc-secteur').value.trim() || 'Non précisé',
-    notes: document.getElementById('mc-notes').value.trim(),
-    campagnes: 0,
-    date: new Date().toLocaleDateString('fr-FR')
-  });
-  saveState();
-  renderClients();
-  updateStats();
-  closeModal('modal-client');
-  document.getElementById('mc-nom').value = '';
-  document.getElementById('mc-secteur').value = '';
-  document.getElementById('mc-notes').value = '';
+function ajouterClient(){
+  const nom=document.getElementById('mc-nom').value.trim();
+  if(!nom){showToast('Le nom est obligatoire','err');return;}
+  state.clients.push({id:Date.now().toString(),nom,secteur:document.getElementById('mc-secteur').value.trim()||'Non précisé',phone:document.getElementById('mc-phone').value.trim(),campagnes:0,date:new Date().toLocaleDateString('fr-FR')});
+  saveState();renderClients();updateStats();closeModal('modal-client');
+  document.getElementById('mc-nom').value='';document.getElementById('mc-secteur').value='';document.getElementById('mc-phone').value='';
   showToast('✅ Client ajouté !');
 }
 
-// ============================================================
-// CALENDRIER
-// ============================================================
-async function genCalendrier() {
-  const client = document.getElementById('cal-client').value.trim();
-  const secteurCal = document.getElementById('cal-secteur').value.trim();
-  const objectif = document.getElementById('cal-objectif').value.trim();
-
-  if (!objectif) { showToast('Précise l\'objectif', 'err'); return; }
-
-  document.getElementById('btn-cal').disabled = true;
-  document.getElementById('cal-loading').classList.add('show');
-  document.getElementById('cal-result').style.display = 'none';
-
-  const prompt = `Tu es un expert en stratégie de contenu pour les réseaux sociaux en Afrique francophone.
-
-Crée un plan de contenu de 30 jours pour :
-- Client : ${client || 'Mon projet'}
-- Secteur : ${secteurCal || 'Business'}
-- Objectif : ${objectif}
-
-Format : pour chaque semaine (7 jours), donne un thème et les idées de posts jour par jour.
-Indique pour chaque jour : le réseau (FB/TK/WA/IG), le type de contenu (vidéo/post/story), et l'idée en 1 phrase.
-Sois concret, actionnable et adapté au marché africain.`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.map(i => i.text || '').join('') || '';
-    document.getElementById('r-cal').textContent = text;
-    document.getElementById('cal-result').style.display = 'block';
-    showToast('✅ Plan généré !');
-  } catch (err) {
-    showToast('Erreur IA', 'err');
-  }
-
-  document.getElementById('btn-cal').disabled = false;
-  document.getElementById('cal-loading').classList.remove('show');
+function sauverClient(){
+  const client=document.getElementById('g-client').value.trim()||'Client';
+  if(!lastContent.facebook){showToast('Génère d\'abord','warn');return;}
+  const idx=state.clients.findIndex(c=>c.nom.toLowerCase()===client.toLowerCase());
+  if(idx!==-1)state.clients[idx].campagnes=(state.clients[idx].campagnes||0)+1;
+  else state.clients.push({id:Date.now().toString(),nom:client,secteur,campagnes:1,date:new Date().toLocaleDateString('fr-FR')});
+  saveState();updateStats();showToast('💾 Sauvegardé !');
 }
 
-// ============================================================
-// RAPPORT
-// ============================================================
-async function genRapport() {
-  const client = document.getElementById('rap-client').value.trim();
-  const periode = document.getElementById('rap-periode').value.trim();
-  const plateformes = document.getElementById('rap-plateformes').value.trim();
-  const resultats = document.getElementById('rap-resultats').value.trim();
-
-  if (!client || !resultats) { showToast('Remplis les champs obligatoires', 'err'); return; }
-
-  document.getElementById('btn-rap').disabled = true;
-  document.getElementById('rap-loading').classList.add('show');
-  document.getElementById('rap-result').style.display = 'none';
-
-  const prompt = `Tu es un consultant marketing digital professionnel. Rédige un rapport client professionnel et structuré :
-
-CLIENT : ${client}
-PÉRIODE : ${periode || 'Non précisée'}
-PLATEFORMES : ${plateformes || 'Réseaux sociaux'}
-RÉSULTATS : ${resultats}
-
-Le rapport doit inclure :
-1. Résumé exécutif
-2. Actions réalisées
-3. Résultats obtenus
-4. Analyse et insights
-5. Recommandations pour la prochaine période
-
-Ton professionnel, précis et valorisant pour le travail accompli.`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.map(i => i.text || '').join('') || '';
-    document.getElementById('r-rap').textContent = text;
-    document.getElementById('rap-result').style.display = 'block';
-    showToast('✅ Rapport généré !');
-  } catch (err) {
-    showToast('Erreur IA', 'err');
-  }
-
-  document.getElementById('btn-rap').disabled = false;
-  document.getElementById('rap-loading').classList.remove('show');
+// PARTAGER
+function partager(p){
+  const lien=document.getElementById('g-lien').value.trim();
+  const msg=lastContent.whatsapp||lastContent.facebook||'';
+  if(!msg){showToast('Génère d\'abord le contenu','warn');return;}
+  if(p==='facebook')window.open(lien?`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lien)}`:'https://www.facebook.com/','_blank');
+  else if(p==='whatsapp')window.open(`https://wa.me/?text=${encodeURIComponent(lastContent.whatsapp||msg)}`,'_blank');
+  else if(p==='telegram')window.open(`https://t.me/share/url?url=${encodeURIComponent(lien||'')}&text=${encodeURIComponent(msg)}`,'_blank');
+  else if(p==='tiktok'){navigator.clipboard.writeText(lastContent.tiktok||'').then(()=>{showToast('📋 Script TikTok copié !');setTimeout(()=>window.open('https://www.tiktok.com/','_blank'),800);});return;}
 }
 
-function partagerRapport() {
-  const text = document.getElementById('r-rap').textContent;
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('📋 Rapport copié !');
-    setTimeout(() => window.open(`https://wa.me/?text=${encodeURIComponent(text.substring(0, 1000))}`, '_blank'), 500);
-  });
+// RES TABS
+function resTab(tab,el){
+  document.querySelectorAll('.res-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.res-panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('rp-'+tab).classList.add('active');
 }
 
-// ============================================================
-// BIO
-// ============================================================
-async function genBio() {
-  const nom = document.getElementById('bio-nom').value.trim();
-  const activite = document.getElementById('bio-activite').value.trim();
-
-  if (!activite) { showToast('Décris ton activité', 'err'); return; }
-
-  document.getElementById('btn-bio').disabled = true;
-  document.getElementById('bio-loading').classList.add('show');
-  document.getElementById('bio-result').style.display = 'none';
-
-  const prompt = `Tu es un expert en personal branding pour les entrepreneurs africains.
-
-Génère 3 versions de bio optimisée pour ${reseauBio} :
-- Nom/Marque : ${nom || 'Mon Entreprise'}
-- Activité : ${activite}
-- Réseau : ${reseauBio}
-
-Pour chaque version, indique :
-VERSION 1 (Professionnelle) : ...
-VERSION 2 (Impact & Résultats) : ...
-VERSION 3 (Storytelling) : ...
-
-Chaque bio doit être percutante, mémorable, avec des emojis stratégiques, adaptée aux limites de caractères du réseau, et inclure un CTA clair.`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.map(i => i.text || '').join('') || '';
-    document.getElementById('r-bio').textContent = text;
-    document.getElementById('bio-result').style.display = 'block';
-    showToast('✅ Bio générée !');
-  } catch (err) {
-    showToast('Erreur IA', 'err');
-  }
-
-  document.getElementById('btn-bio').disabled = false;
-  document.getElementById('bio-loading').classList.remove('show');
-}
-
-// ============================================================
 // COPY
-// ============================================================
-function copyRes(id) {
-  const text = document.getElementById(id).textContent;
-  if (!text || text.includes('attente')) { showToast('Génère d\'abord', 'warn'); return; }
-  navigator.clipboard.writeText(text).then(() => showToast('📋 Copié !'));
+function copyEl(id){
+  const text=document.getElementById(id).textContent;
+  if(!text||text.includes('attente')){showToast('Génère d\'abord','warn');return;}
+  navigator.clipboard.writeText(text).then(()=>showToast('📋 Copié !'));
 }
 
-// ============================================================
 // MODALS
-// ============================================================
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
-});
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
-// ============================================================
 // STATS
-// ============================================================
-function updateStats() {
-  document.getElementById('s-clients').textContent = state.clients.length;
-  document.getElementById('s-posts').textContent = state.stats.posts;
-  document.getElementById('s-partages').textContent = state.stats.partages;
+function updateStats(){
+  document.getElementById('s-clients').textContent=state.clients.length;
+  document.getElementById('s-posts').textContent=state.stats.posts;
+  document.getElementById('s-briefs').textContent=state.stats.briefs;
 }
 
-// ============================================================
 // TOAST
-// ============================================================
-function showToast(msg, type = '') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + type + ' show';
-  setTimeout(() => t.classList.remove('show'), 2500);
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-// ============================================================
-// INIT
-// ============================================================
-loadState();
-updateStats();
+loadState();updateStats();
 </script>
 </body>
 </html>
